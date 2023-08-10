@@ -1,0 +1,10 @@
+# Baldur2 Dockerfile
+FROM debian:jessie
+
+# Metadata
+LABEL description="Debian Jessie container for D2"
+
+# Any additional configuration or setup can be added here
+
+# Mantener el contenedor en ejecución
+CMD ["tail", "-f", "/dev/null"]
