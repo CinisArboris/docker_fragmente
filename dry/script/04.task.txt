@@ -1,0 +1,5 @@
+1. quitar los contedores de bridge.
+2. crear las dos redes 66(n1) / 77(n2).
+3. asignar c1.c2 > 66.
+4. asignar c2.c3 > 77.
+5. verificar las conexion.
