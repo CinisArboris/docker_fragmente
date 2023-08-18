@@ -4,9 +4,9 @@ param (
 
 if ($action -eq "1") {
     # Reconstruir las imágenes
-    docker build -t 'i1.dry' -f '../imagen/Baldur1' '../imagen/Baldur1'
-    docker build -t 'i2.dry' -f '../imagen/Baldur2' '../imagen/Baldur2'
-    docker build -t 'i3.dry' -f '../imagen/Baldur3' '../imagen/Baldur3'
+    docker build -t 'i1.dry' -f '../imagen/Baldur1' '.'
+    docker build -t 'i2.dry' -f '../imagen/Baldur2' '.'
+    docker build -t 'i3.dry' -f '../imagen/Baldur3' '.'
 }
 elseif ($action -eq "0") {
     # Eliminar las imágenes

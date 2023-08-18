@@ -1,8 +1,30 @@
-1. Desconectar los contenedores (c1.dry/c2.dry/c3.dry) de bridge.
- - docker network disconnect n_etwork c_ontenedor
-2. crear las dos redes 66(n1.dry) / 55(n2.dry).
- - docker network create n_etwork --subnet=x.x.x.x n_etwork
- 
-3. asignar c1.c2 > 66.
-4. asignar c2.c3 > 77.
-5. verificar las conexion.
+1. desconectar de bridge
+    c1.dry - c2.dry - c3.dry
+
+2. crear la red n1.dry en la red 192.168.11.0/24
+
+3. crear la red n2.dry en la red 192.168.22.0/24
+
+4. agregar en la red n1.dry
+    c1.dry - c2.dry
+
+5. agregar en la red n2.dry
+    c2.dry - c3.dry
+
+6. verificar n1.dry
+
+7. verificar n2.dry
+
+8. realizar pings ::
+    - n1 > n1
+    - c1 > c2 = true
+    
+    - n1 > n2
+    - c1 > c2 = false
+    - c1 > c3 = false
+
+    - n2 > n1
+    - c2 > c1 = true
+
+    - n2 > n2
+    - c2 > c3 = true
