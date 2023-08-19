@@ -1,0 +1,4 @@
+Personalizar una imagen docker base, para luego subir a dockerhub.
+
+# Descargar la imagen base
+docker pull debian:bullseye
