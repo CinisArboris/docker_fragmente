@@ -2,3 +2,18 @@ Personalizar una imagen docker base, para luego subir a dockerhub.
 
 # Descargar la imagen base
 docker pull debian:bullseye
+
+# Nueva imagen con el tag : default.imagen.debian.bullseye
+docker tag debian:bullseye default.imagen.debian.bullseye
+
+# Crear el contenedor
+docker run -d --name contenedor.bullseye default.imagen.debian.bullseye tail -f /dev/null
+
+# Ingresar al contenedor
+docker exec -it contenedor.bullseye bash
+
+# Actualizar debian
+apt-get update
+
+# Instalar nmap
+apt -y install nmap
