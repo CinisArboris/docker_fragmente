@@ -5,7 +5,7 @@ docker pull debian:bullseye
 docker tag debian:bullseye i.lab2
 
 # Crear el contenedor
-docker run -d --name c.lab2 -p 90:80 i.lab2 tail -f /dev/null
+docker run -d --name c.lab2 -p 200:80 -v "%APPDATA%/share:/var/www/html" i.lab2 tail -f /dev/null
 
 # Ingresar al contenedor
 docker exec -it c.lab2 bash
@@ -16,5 +16,19 @@ apt-get update
 # Instalar el servidor
 apt -y install nginx
 
+# Salir del contenedor
+exit
+
 # Iniciar los servicios
 docker exec c.lab2 service nginx start
+
+# Modificando el index.html
+echo ^<h1 style="text-align:center;"^>Nombre: Eyver Emilio Vargas Medina^</h1^> > index.html
+echo ^<h1 style="text-align:center;"^>Modulo: Contenedores DOCKER para la automatizaci^&oacute;n de TI^</h1^> >> index.html
+docker cp index.html c.lab2:/var/www/html/index.html
+del index.html
+
+# Generamos el share.html en C:\
+if not exist "%APPDATA%\share" mkdir "%APPDATA%\share"
+echo ^<h1 style="text-align:center;"^>Nombre (COMPARTIDO): Eyver Emilio Vargas Medina^</h1^> > "%APPDATA%\share\share.html"
+echo ^<h1 style="text-align:center;"^>Modulo (COMPARTIDO): Contenedores DOCKER para la automatizaci^&oacute;n de TI^</h1^> >> "%APPDATA%\share\share.html"
