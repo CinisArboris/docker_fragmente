@@ -1,11 +1,11 @@
 Contenedores en la linea de ordenes
 
 Crear un contenedor que incluya:
-- a partir de una imagen pública
-- un servidor Apache en funcionamiento
+- [x] a partir de una imagen pública
+- [x] un servidor Apache en funcionamiento
 
 Modificar el contenido del contenedor:
-- desplegar la pagina index html
-- que incluya su nombre completo.
+- [o] desplegar la pagina index html
+- [o] que incluya su nombre completo.
 
 Enviar los pasos necesarios y la explicación

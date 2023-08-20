@@ -6,3 +6,12 @@ docker tag debian:bullseye i.lab2
 
 # Crear el contenedor
 docker run -d --name c.lab2 i.lab2 tail -f /dev/null
+
+# Ingresar al contenedor
+docker exec -it c.lab2 bash
+
+# Actualizar la biblioteca de librerias
+apt-get update
+
+# Instalar el servidor
+apt -y install nginx
