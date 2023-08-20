@@ -1,0 +1,8 @@
+# Obtener la imagen base (debian)
+docker pull debian:bullseye
+
+# Asignar un tag a la imagen
+docker tag debian:bullseye i.lab2
+
+# Crear el contenedor
+docker run -d --name c.lab2 i.lab2 tail -f /dev/null
