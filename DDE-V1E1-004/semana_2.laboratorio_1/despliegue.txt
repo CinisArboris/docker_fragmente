@@ -5,7 +5,7 @@ docker pull debian:bullseye
 docker tag debian:bullseye i.lab1
 
 # Crear el contenedor
-docker run -d --name c.lab1 i.lab1 tail -f /dev/null
+docker run -d --name c.lab1 -p 80:80 i.lab1 tail -f /dev/null
 
 # Ingresar al contenedor
 docker exec -it c.lab1 bash
@@ -15,3 +15,6 @@ apt-get update
 
 # Instalar el servidor
 apt -y install apache2
+
+# Iniciar los servicios
+docker exec c.lab1 service apache2 start
