@@ -5,7 +5,7 @@ Crear un contenedor que incluya:
 - [x] un servidor Apache en funcionamiento
 
 Modificar el contenido del contenedor:
-- [o] desplegar la pagina index html
-- [o] que incluya su nombre completo.
+- [x] desplegar la pagina index html
+- [x] que incluya su nombre completo.
 
 Enviar los pasos necesarios y la explicación

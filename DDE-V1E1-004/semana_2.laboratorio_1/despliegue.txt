@@ -18,3 +18,8 @@ apt -y install apache2
 
 # Iniciar los servicios
 docker exec c.lab1 service apache2 start
+
+# Modificando el index.html
+echo ^<h1 style="text-align:center;"^>Nombre: Eyver Emilio Vargas Medina^</h1^> > index.html
+docker cp index.html c.lab1:/var/www/html/index.html
+del index.html
