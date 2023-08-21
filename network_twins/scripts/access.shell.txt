@@ -1,0 +1,11 @@
+# Acceder al shell del contenedor D1_container
+docker exec -it D1_container /bin/bash
+
+# Acceder al shell del contenedor D2_container
+docker exec -it D2_container /bin/bash
+
+# Acceder al shell del contenedor D3_container
+docker exec -it D3_container /bin/bash
+
+# Acceder al shell del contenedor D4_container
+docker exec -it D4_container /bin/bash
