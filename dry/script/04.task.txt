@@ -1,44 +1,30 @@
-1. Desconectar los contenedores (c1.dry/c2.dry/c3.dry) de bridge.
- - docker network disconnect n_etwork c_ontenedor
-2. crear las dos redes 66(n1.dry) / 55(n2.dry).
- - docker network create n_etwork --subnet=x.x.x.x n_etwork
+1. desconectar de bridge
+    c1.dry - c2.dry - c3.dry
 
-3. asignar c1.c2 > 66.
-4. asignar c2.c3 > 77.
+2. crear la red n1.dry en la red 192.168.11.0/24
 
-C:\Users\evargasm>docker network inspect n1.dry
-        "Name": "n1.dry",
-        "Containers": {
-            "ce276c460f6dfd4fda578dab55347ef964a9d4de5fbb79e3aef39d36c132ef47": {
-                "Name": "c1.dry",
-                "EndpointID": "563a55325154b2017d6e703947b377690b5cc482099184ba68002e06a3c6a8b3",
-                "MacAddress": "02:42:c0:a8:42:02",
-                "IPv4Address": "192.168.66.2/24",
-                "IPv6Address": ""
-            },
-            "dca0bd87b0a4af99163b9258f1a4bc3329cd4d1db1c97462cbaf27cd13974645": {
-                "Name": "c2.dry",
-                "EndpointID": "e99dfd969cfccc5ff8b3460828891a683f718a2ac4d1c54911818af39cb1f03e",
-                "MacAddress": "02:42:c0:a8:42:03",
-                "IPv4Address": "192.168.66.3/24",
-                "IPv6Address": ""
-            }
-C:\Users\evargasm>docker network inspect n2.dry
-        "Name": "n2.dry",
-        "Containers": {
-            "38d965ef2f5458d45e2af9565e4c4b9569d52feaf8ed506fd4ab8e0a0c729f0e": {
-                "Name": "c3.dry",
-                "EndpointID": "10deaf6e70ff604e452dcfbdab0a06f7fddc34ffdbf2e05348c4535275afc587",
-                "MacAddress": "02:42:c0:a8:37:03",
-                "IPv4Address": "192.168.55.3/24",
-                "IPv6Address": ""
-            },
-            "dca0bd87b0a4af99163b9258f1a4bc3329cd4d1db1c97462cbaf27cd13974645": {
-                "Name": "c2.dry",
-                "EndpointID": "2fd69ad109d07735c1a3b16584dc1c9c29f003f862df9e3e6e5de6b82372f904",
-                "MacAddress": "02:42:c0:a8:37:02",
-                "IPv4Address": "192.168.55.2/24",
-                "IPv6Address": ""
-            }
+3. crear la red n2.dry en la red 192.168.22.0/24
 
-5. verificar las conexion.
+4. agregar en la red n1.dry
+    c1.dry - c2.dry
+
+5. agregar en la red n2.dry
+    c2.dry - c3.dry
+
+6. verificar n1.dry
+
+7. verificar n2.dry
+
+8. realizar pings ::
+    - n1 > n1
+    - c1 > c2 = true
+    
+    - n1 > n2
+    - c1 > c2 = false
+    - c1 > c3 = false
+
+    - n2 > n1
+    - c2 > c1 = true
+
+    - n2 > n2
+    - c2 > c3 = true

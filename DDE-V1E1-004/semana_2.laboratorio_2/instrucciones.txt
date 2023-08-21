@@ -1,0 +1,13 @@
+Contenedores en la linea de ordenes
+
+Crear un contenedor que incluya
+- [x] a partir de una imagen pública
+- [x] un servidor NGINX en funcionamiento
+
+Modificar el contenido del contenedor:
+- [x] desplegar la pagina index html
+- [x] desde volumen ligado a  una carpeta del host
+- [x] que incluya su nombre
+- [x] que incluya modulo actual
+
+Enviar los pasos necesarios y la explicación
