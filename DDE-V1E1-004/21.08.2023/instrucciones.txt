@@ -1,0 +1,31 @@
+# Migrar los comandos a Dockerfile
+
+
+
+
+
+# base de datos
+
+docker run -d ^
+--name dbmysql ^
+--network redwp ^
+-v "%APPDATA%\share\:/var/lib/mysql" ^
+-e MYSQL_DATABASE=wpbase ^
+-e MYSQL_USER=wpuser ^
+-e MYSQL_PASSWORD=123456 ^
+-e MYSQL_ROOT_PASSWORD=123456 ^
+mysql
+
+
+# sitio wordpress
+
+docker run -d ^
+--name frontwp ^
+--network redwp ^
+-v "%APPDATA%\share\:/var/www/html/wp-content" ^
+-e WORDPRESS_DB_HOST=dbmysql ^
+-e WORDPRESS_DB_USER=wpuser ^
+-e WORDPRESS_DB_PASSWORD=123456 ^
+-e WORDPRESS_DB_NAME=wpbase ^
+-p 8080:80 ^
+wordpress
