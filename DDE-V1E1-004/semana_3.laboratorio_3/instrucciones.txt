@@ -1,6 +1,7 @@
 Crear varios contenedores en la linea de ordenes:
 - [o] desplegar dos contenedores
-- [o] uno con la base de datos MariaDB y otro con PHPMyAdmin
+- [o] uno con la base de datos MariaDB
+- [o] otro con PHPMyAdmin
 - [o] configurar para que puedan trabajar ambos contenedores juntos.
 - [o] contenedores en la linea de ordenes
 
