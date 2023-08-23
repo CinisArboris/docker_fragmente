@@ -1,6 +1,3 @@
-@echo off
-SETLOCAL ENABLEDELAYEDEXPANSION
-
 :: Detener el contenedor si existe
 docker stop c.mariadb 2>nul
 
@@ -31,5 +28,3 @@ docker exec c.mariadb apt-get install mysql-client -y
 
 :: Liberar el usuario para que pueda conectarse desde cualquier host
 echo GRANT ALL PRIVILEGES ON *.* TO 'mariauser'@'%' IDENTIFIED BY '123456'; FLUSH PRIVILEGES; | docker exec -i c.mariadb mysql -u root --password=123456
-
-ENDLOCAL
