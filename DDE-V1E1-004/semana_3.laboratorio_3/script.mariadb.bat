@@ -21,8 +21,8 @@ docker run -d ^
 --name mariadb ^
 --network redwp ^
 -v "%APPDATA%\share\:/var/lib/mysql" ^
--e MARIADB_DATABASE=wpbase ^
--e MARIADB_USER=wpuser ^
+-e MARIADB_DATABASE=pmadb ^
+-e MARIADB_USER=pmauser ^
 -e MARIADB_PASSWORD=123456 ^
 -e MARIADB_ROOT_PASSWORD=123456 ^
 mariadb
