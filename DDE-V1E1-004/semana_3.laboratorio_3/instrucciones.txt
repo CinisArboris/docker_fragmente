@@ -2,12 +2,12 @@ Base:
 - Mediante la linea de ordenes, realizar:
 
 Servidor : Base de datos
-- [o] Levantar un contenedor con la base de datos MariaDB
+- [x] Levantar un contenedor con la base de datos MariaDB
 
 Servidor : Administrador de Base de datos
-- [o] Levantar un contenedor con la web PHPMyAdmin
+- [x] Levantar un contenedor con la web PHPMyAdmin
 
 Configuracion
-- [o] configurar para que puedan trabajar ambos contenedores juntos.
+- [x] configurar para que puedan trabajar ambos contenedores juntos.
 
 Enviar los pasos necesarios y la explicación
