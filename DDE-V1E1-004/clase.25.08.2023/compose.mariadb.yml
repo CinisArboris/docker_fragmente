@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: c.mariadb
+    ports:
+      - "700:3306"
+    volumes:
+      - "${APPDATA}/share:/var/lib/mysql"
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
+    environment:
+      - MARIADB_DATABASE=mariadb
+      - MARIADB_USER=mariauser
+      - MARIADB_PASSWORD=123456
+      - MARIADB_ROOT_PASSWORD=123456
+    networks:
+      - lab3-network
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+networks:
+  lab3-network:
+    external:
+      name: r.lab3
