@@ -1,10 +1,6 @@
-# Migrar los comandos a Dockerfile
+:: Migrar los comandos a Dockerfile
 
-
-
-
-
-# base de datos
+:: base de datos
 
 docker run -d ^
 --name dbmysql ^
@@ -17,7 +13,7 @@ docker run -d ^
 mysql
 
 
-# sitio wordpress
+:: sitio wordpress
 
 docker run -d ^
 --name frontwp ^
