@@ -2,16 +2,16 @@ version: '3'
 
 services:
   mariadb:
-    image: mariadb:latest
-    container_name: c.mariadb
+    image: mysql-custom
+    container_name: dbmysql960
     ports:
-      - "700:3306"
+      - "960:3306"
     volumes:
-      - "${APPDATA}/share:/var/lib/mysql"
+      - "${APPDATA}/share/db960/:/var/lib/mysql"
       - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
-      - MARIADB_DATABASE=mariadb
-      - MARIADB_USER=mariauser
+      - MARIADB_DATABASE=dbbase
+      - MARIADB_USER=dbuser
       - MARIADB_PASSWORD=123456
       - MARIADB_ROOT_PASSWORD=123456
     networks:
@@ -25,4 +25,4 @@ services:
 networks:
   lab3-network:
     external:
-      name: r.lab3
+      name: red21
