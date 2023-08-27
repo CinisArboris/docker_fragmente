@@ -2,8 +2,8 @@
 
 SET DOCKER_DIR=C:\Users\eyver\Documents\git\docker_fragmente\DDE-V1E1-004\clase.21.08.2023
 SET DOCKERFILE_NAME=Dockerfile.b
-SET CONTAINER_NAME=frontwp
-SET VOLUME_PATH=%APPDATA%\share\
+SET CONTAINER_NAME=frontwp900
+SET VOLUME_PATH=%APPDATA%\share\web900\
 
 :: Construir la imagen de WordPress (si tienes un Dockerfile)
 docker build -t wordpress-custom -f %DOCKER_DIR%\%DOCKERFILE_NAME% %DOCKER_DIR%
@@ -19,9 +19,9 @@ docker run -d ^
 --name %CONTAINER_NAME% ^
 --network red21 ^
 -v "%VOLUME_PATH%:/var/www/html/wp-content" ^
--e WORDPRESS_DB_HOST=dbmysql ^
+-e WORDPRESS_DB_HOST=dbmysql950 ^
+-e WORDPRESS_DB_NAME=wpbase ^
 -e WORDPRESS_DB_USER=wpuser ^
 -e WORDPRESS_DB_PASSWORD=123456 ^
--e WORDPRESS_DB_NAME=wpbase ^
 -p 900:80 ^
 wordpress-custom
