@@ -1,0 +1,4 @@
+Base: Proyecto personal
+- [o] con la imagen del ejercicio anterior:
+- [o] prepara un despliegue con Docker compose.
+- [o] que incluya varios contenedores para el funcionamiento de su aplicación.
