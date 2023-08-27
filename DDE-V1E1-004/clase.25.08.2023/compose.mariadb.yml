@@ -2,26 +2,18 @@ version: '3'
 
 services:
   mariadb:
-    image: mysql-custom
+    image: mariadb-custom
     container_name: dbmysql960
     ports:
       - "960:3306"
     volumes:
       - "${APPDATA}/share/db960/:/var/lib/mysql"
-      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
       - MARIADB_DATABASE=dbbase
       - MARIADB_USER=dbuser
       - MARIADB_PASSWORD=123456
-      - MARIADB_ROOT_PASSWORD=123456
     networks:
       - lab3-network
-    command: --init-file /docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
-
 networks:
   lab3-network:
     external:
