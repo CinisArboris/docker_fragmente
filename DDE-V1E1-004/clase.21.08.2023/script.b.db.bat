@@ -24,8 +24,8 @@ docker run -d ^
 --name %CONTAINER_NAME% ^
 --network red21 ^
 -v "%VOLUME_PATH%:/var/lib/mysql" ^
--e MYSQL_DATABASE=wpbase ^
--e MYSQL_USER=wpuser ^
+-e MYSQL_DATABASE=dbbase ^
+-e MYSQL_USER=dbuser ^
 -e MYSQL_PASSWORD=123456 ^
 -e MYSQL_ROOT_PASSWORD=123456 ^
 -p 950:3306 ^

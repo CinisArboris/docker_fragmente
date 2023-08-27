@@ -19,9 +19,9 @@ docker run -d ^
 --name %CONTAINER_NAME% ^
 --network red21 ^
 -v "%VOLUME_PATH%:/var/www/html/wp-content" ^
--e WORDPRESS_DB_HOST=dbmysql950 ^
--e WORDPRESS_DB_NAME=wpbase ^
--e WORDPRESS_DB_USER=wpuser ^
+-e WORDPRESS_DB_HOST=dbmysql960 ^
+-e WORDPRESS_DB_NAME=dbbase ^
+-e WORDPRESS_DB_USER=dbuser ^
 -e WORDPRESS_DB_PASSWORD=123456 ^
 -p 900:80 ^
 wordpress-custom
