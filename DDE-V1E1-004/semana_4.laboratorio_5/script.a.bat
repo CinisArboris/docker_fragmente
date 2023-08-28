@@ -1,5 +1,5 @@
-@echo off
+docker rm -f c.web_diogenes_rage
 
-:: Construye y arranca los servicios definidos en Compose.yml
-echo Construyendo y arrancando servicios...
-docker-compose -f Compose.yml up --scale web_easterbunny=2
+docker build -t i.web_diogenes_rage .
+
+docker run --name=c.web_diogenes_rage -p 80:1337 i.web_diogenes_rage

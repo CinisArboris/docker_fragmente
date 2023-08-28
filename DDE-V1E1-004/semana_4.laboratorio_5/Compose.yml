@@ -1,10 +1,18 @@
-version: '3.8'
+version: '3'
 
 services:
-  web_easterbunny:
+  web:
     build:
-      context: C:\Users\eyver\Documents\git\docker_fragmente\DDE-V1E1-004\semana_4.laboratorio_5
+      context: .
+      # Nombre de tu Dockerfile, si está en otra ubicación ajusta el path
       dockerfile: Dockerfile
-    image: web_easterbunny
+    # El nombre y etiqueta que quieras dar a la imagen
+    image: my-web-app:latest
     ports:
-      - "80"
+      # Mapea el puerto 80 del host al puerto 1337 del contenedor
+      - "80:1337"
+    volumes:
+      # Monta el directorio 'app' en el host al '/app' en el contenedor, si necesitas montar datos o configuraciones
+      - ./app:/app
+    # Reinicia el contenedor si este se cae
+    restart: always
