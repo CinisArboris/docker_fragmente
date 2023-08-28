@@ -2,7 +2,7 @@
 
 SET DOCKER_DIR=#
 SET DOCKERFILE_NAME=DockerfileDB
-SET CONTAINER_NAME=dbmysql950
+SET CONTAINER_NAME=cmysql950
 SET VOLUME_PATH=%APPDATA%\share\db950\
 
 :: Construir la imagen usando el Dockerfile especificado
