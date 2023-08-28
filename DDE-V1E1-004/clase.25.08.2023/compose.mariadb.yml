@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  mariadb:
-    image: mariadb-custom
-    container_name: dbmaria960
+  maria:
+    image: maria-custom
+    container_name: cmaria960
     ports:
       - "960:3306"
     volumes:
@@ -12,6 +12,7 @@ services:
       - MARIADB_DATABASE=dbbase
       - MARIADB_USER=dbuser
       - MARIADB_PASSWORD=123456
+      - MARIADB_ROOT_PASSWORD=123456
     networks:
       - lab3-network
 networks:
