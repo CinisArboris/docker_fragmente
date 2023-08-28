@@ -1,5 +1,5 @@
 @echo off
-SET DOCKER_PATH=C:\Users\evargasm\Documents\git\docker_fragmente\DDE-V1E1-004\semana_3.laboratorio_4
+SET DOCKER_PATH=#
 
 docker rm -f c.custom-proyect
 
