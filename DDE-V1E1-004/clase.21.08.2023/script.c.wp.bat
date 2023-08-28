@@ -1,7 +1,7 @@
 @echo off
 
-SET DOCKER_DIR=C:\Users\eyver\Documents\git\docker_fragmente\DDE-V1E1-004\clase.21.08.2023
-SET DOCKERFILE_NAME=Dockerfile.b
+SET DOCKER_DIR=#
+SET DOCKERFILE_NAME=DockerfileWP
 SET CONTAINER_NAME=frontwp900
 SET VOLUME_PATH=%APPDATA%\share\web900\
 

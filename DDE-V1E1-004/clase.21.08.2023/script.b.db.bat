@@ -1,7 +1,7 @@
 @echo off
 
-SET DOCKER_DIR=C:\Users\eyver\Documents\git\docker_fragmente\DDE-V1E1-004\clase.21.08.2023
-SET DOCKERFILE_NAME=Dockerfile.a
+SET DOCKER_DIR=#
+SET DOCKERFILE_NAME=DockerfileDB
 SET CONTAINER_NAME=dbmysql950
 SET VOLUME_PATH=%APPDATA%\share\db950\
 
