@@ -1,1 +1,9 @@
 FROM wordpress:latest
+
+# Habilitar WP_DEBUG
+#RUN sed -i "s/define('WP_DEBUG', false);/define('WP_DEBUG', true);/g" /var/www/html/wp-config.php
+
+# Añadir configuraciones de debug adicionales
+#RUN echo "define('WP_DEBUG_LOG', true);" >> /var/www/html/wp-config.php
+#RUN echo "define('WP_DEBUG_DISPLAY', false);" >> /var/www/html/wp-config.php
+#echo "@ini_set('display_errors', 0);" >> /var/www/html/wp-config.php
