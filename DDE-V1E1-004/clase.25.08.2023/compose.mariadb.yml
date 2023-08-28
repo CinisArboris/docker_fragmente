@@ -3,7 +3,7 @@ version: '3'
 services:
   mariadb:
     image: mariadb-custom
-    container_name: dbmysql960
+    container_name: dbmaria960
     ports:
       - "960:3306"
     volumes:
