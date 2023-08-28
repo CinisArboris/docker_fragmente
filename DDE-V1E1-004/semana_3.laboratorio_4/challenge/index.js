@@ -1,39 +1,37 @@
 const express      = require('express');
 const app          = express();
-const nunjucks     = require('nunjucks');
+const path         = require('path');
+const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
-const routes       = require('./routes/routes');
-const Database     = require('./utils/database');
+const nunjucks     = require('nunjucks');
+const routes       = require('./routes');
+const Database     = require('./database');
 
-const db = new Database('./database.db');
 
+const db = new Database('diogenes-rage.db');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.json());
-app.set('trust proxy', process.env.PROXY !== 'false');
-app.use('/static', express.static('static'));
 
-nunjucks.configure("views", {
-    autoescape: true,
-    express: app,
-    views: "templates",
+nunjucks.configure('views', {
+	autoescape: true,
+	express: app
 });
+
+app.set('views', './views');
+app.use('/static', express.static(path.resolve('static')));
 
 app.use(routes(db));
 
 app.all('*', (req, res) => {
-    return res.status(404).send({
-        message: '404 page not found'
-    });
+	return res.status(404).send({
+		message: '404 page not found'
+	});
 });
 
-app.use(function (err, req, res, next) {
-    res.status(500).json({
-        message: 'Something went wrong!'
-    });
-});
-
-(async() => {
-    await db.connect();
-    await db.migrate();
-    app.listen(1337, '0.0.0.0', () => console.log('Listening on port 1337'));
+(async () => {
+	await db.connect();
+	await db.migrate();
+	app.listen(1337, '0.0.0.0', () => console.log('Listening on port 1337'));
 })();
