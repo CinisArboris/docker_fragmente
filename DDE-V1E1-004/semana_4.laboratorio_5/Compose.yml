@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  web_easterbunny:
+    build:
+      context: C:\Users\eyver\Documents\git\docker_fragmente\DDE-V1E1-004\semana_4.laboratorio_5
+      dockerfile: Dockerfile
+    image: web_easterbunny
+    ports:
+      - "80"
