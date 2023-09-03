@@ -1,6 +1,6 @@
 @echo off
 
-SET DOCKER_DIR=#
+SET DOCKER_DIR=.
 SET DOCKERFILE_NAME=DockerfileWP
 SET CONTAINER_NAME=cwp900
 SET VOLUME_PATH=%APPDATA%\share\web900\
@@ -24,7 +24,7 @@ docker run -d ^
 --name %CONTAINER_NAME% ^
 --network red21 ^
 -v "%VOLUME_PATH%:/var/www/html/wp-content" ^
--e WORDPRESS_DB_HOST=cmaria960 ^
+-e WORDPRESS_DB_HOST=cmysql950 ^
 -e WORDPRESS_DB_NAME=dbbase ^
 -e WORDPRESS_DB_USER=dbuser ^
 -e WORDPRESS_DB_PASSWORD=123456 ^
