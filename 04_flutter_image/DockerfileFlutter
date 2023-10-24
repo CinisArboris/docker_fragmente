@@ -1,33 +1,33 @@
 # Usar una imagen base de Debian
 FROM debian:bookworm
 
-# Instalar dependencias necesarias para descargar y descomprimir archivos, y para que funcionen el SDK y Flutter
-#RUN apt-get update && apt-get install -y wget unzip openjdk-11-jdk
+# Instalar dependencias básicas y requeridas para herramientas de Android
+RUN apt-get update && apt-get install -y wget unzip tar curl
 
-# Configurar las variables de entorno para los directorios de Flutter y Android SDK
-ENV FLUTTER_HOME="/sdk/flutter"
+#openjdk-11-jdk
+
+# Configurar las variables de entorno necesarias
 ENV ANDROID_SDK_ROOT="/sdk/android"
+ENV PATH="${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools"
 
-# Incluir las rutas de Flutter y Android en la variable PATH
-ENV PATH="$PATH:$FLUTTER_HOME/bin:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools"
+# Crear directorio para el Android SDK
+RUN mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
 
-# Crear los directorios necesarios
-RUN mkdir -p /sdk/flutter
-RUN mkdir -p /sdk/android
+# Descargar y descomprimir Android Command Line Tools
+RUN wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O /tmp/cmdline-tools.zip \
+    && unzip -q /tmp/cmdline-tools.zip -d "${ANDROID_SDK_ROOT}/cmdline-tools" \
+    && mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest
 
-# Descargar y descomprimir Android Command Line Tools en el directorio correspondiente
-RUN wget https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O /tmp/cmdline-tools.zip \
-    && unzip /tmp/cmdline-tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools \
-    && mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
+# Aceptar licencias de una manera diferente
+RUN mkdir -p ${ANDROID_SDK_ROOT}/licenses && \
+    echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ${ANDROID_SDK_ROOT}/licenses/android-sdk-license && \
+    echo "84831b9409646a918e30573bab4c9c91346d8abd" > ${ANDROID_SDK_ROOT}/licenses/android-sdk-preview-license
 
-# Aceptar todas las licencias del Android SDK
-#RUN yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+# Instalar Android SDK y platform-tools
+#RUN ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
-# Instalar las versiones específicas del Android SDK y las herramientas de construcción
-# Aquí se especifica la versión 21 como versión mínima soportada. También puedes añadir otras versiones si necesitas soporte adicional.
-#RUN $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-21" "build-tools;30.0.3"
+# Verificar la instalación de adb
+#RUN which adb
 
-# Resto de comandos para configurar tu entorno Flutter, si es necesario...
-
-# Establecer el directorio de trabajo (donde se ejecutarán los comandos subsiguientes)
-WORKDIR /flutterProyect
+# Establecer el directorio de trabajo (opcional, pero recomendado)
+WORKDIR /workspace

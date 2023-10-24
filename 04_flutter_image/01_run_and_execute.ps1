@@ -35,16 +35,24 @@ try {
 
     # Si todo ha ido bien hasta este punto, actualizamos el archivo de versión.
     Set-Content -Path $versionFile -Value $newVersion
-
-    # Limpieza: elimina el contenedor si ya existe.
-    Write-Host "Verificando si el contenedor existe y eliminándolo..."
-    docker rm -f flutter_container 2> $null
-
-    Write-Host "Ejecutando el contenedor Docker en segundo plano..."
-    # Correr el contenedor basado en la nueva imagen.
-    docker run --name flutter_container --rm -d "cinisarboris/imagen_flutter:$newVersion" /bin/bash -c "while :; do sleep 10; done"
 }
 catch {
     Write-Host "Error: $_" -ForegroundColor Red
+    exit 1
+}
+
+# Limpieza: elimina el contenedor si ya existe, capturando y suprimiendo errores.
+Write-Host "Verificando si el contenedor existe y eliminándolo..."
+$existingContainer = docker ps -a -q -f name=flutter_container
+if (-not [string]::IsNullOrEmpty($existingContainer)) {
+    docker rm -f flutter_container | Out-Null
+}
+
+Write-Host "Ejecutando el contenedor Docker en segundo plano..."
+# Correr el contenedor basado en la nueva imagen.
+try {
+    docker run --name flutter_container --rm -d "cinisarboris/imagen_flutter:$newVersion" /bin/bash -c "while :; do sleep 10; done"
+} catch {
+    Write-Host "Error al ejecutar el contenedor Docker: $_" -ForegroundColor Red
     exit 1
 }
