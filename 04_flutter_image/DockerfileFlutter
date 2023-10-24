@@ -1,33 +1,47 @@
 # Usar una imagen base de Debian
 FROM debian:bookworm
 
-# Instalar dependencias básicas y requeridas para herramientas de Android
-RUN apt-get update && apt-get install -y wget unzip tar curl
+# Bloque: Instalación de dependencias básicas
+RUN apt-get update && \
+    apt-get install -y wget unzip tar curl
 
-#openjdk-11-jdk
+# Bloque: Instalación de Java
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk && \
+    apt-get clean
 
-# Configurar las variables de entorno necesarias
+# Definir variable de entorno JAVA_HOME (esto depende de la ruta de instalación de tu Java)
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH $JAVA_HOME/bin:$PATH
+
+# Bloque: Preparación para Android SDK
 ENV ANDROID_SDK_ROOT="/sdk/android"
-ENV PATH="${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools"
-
-# Crear directorio para el Android SDK
 RUN mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
 
-# Descargar y descomprimir Android Command Line Tools
-RUN wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O /tmp/cmdline-tools.zip \
-    && unzip -q /tmp/cmdline-tools.zip -d "${ANDROID_SDK_ROOT}/cmdline-tools" \
-    && mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest
+# Bloque: Descarga y configuración de Android Command Line Tools
+RUN wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O /tmp/cmdline-tools.zip && \
+    unzip -q /tmp/cmdline-tools.zip -d "${ANDROID_SDK_ROOT}/cmdline-tools" && \
+    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest
 
-# Aceptar licencias de una manera diferente
+# Configuración de PATH para las herramientas de Android
+ENV PATH="${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools"
+
+# Bloque: Aceptar licencias y descargar componentes de Android SDK
 RUN mkdir -p ${ANDROID_SDK_ROOT}/licenses && \
     echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ${ANDROID_SDK_ROOT}/licenses/android-sdk-license && \
     echo "84831b9409646a918e30573bab4c9c91346d8abd" > ${ANDROID_SDK_ROOT}/licenses/android-sdk-preview-license
 
-# Instalar Android SDK y platform-tools
-#RUN ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+RUN ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+
+# Bloque: Verificación de la instalación
+# Asegurar que platform-tools está instalado correctamente
+RUN ls -al ${ANDROID_SDK_ROOT}/platform-tools
+
+# Agregar platform-tools al PATH para facilitar el acceso a adb y otras herramientas
+ENV PATH="${PATH}:${ANDROID_SDK_ROOT}/platform-tools"
 
 # Verificar la instalación de adb
-#RUN which adb
+RUN which adb
 
-# Establecer el directorio de trabajo (opcional, pero recomendado)
+# Establecer el directorio de trabajo (opcional, pero recomendado para futuros comandos de RUN/COPY/etc.)
 WORKDIR /workspace
