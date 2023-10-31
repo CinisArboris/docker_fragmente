@@ -2,13 +2,18 @@
 FROM debian:bookworm
 
 # Instalar dependencias básicas y requeridas para herramientas de Android
-RUN apt-get update && apt-get install -y wget unzip tar curl
+RUN apt-get update && \
+    apt-get install -y wget unzip tar curl openjdk-17-jdk-headless openjdk-17-jre-headless && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-#openjdk-11-jdk
-
-# Configurar las variables de entorno necesarias
+# Configurar las variables de entorno necesarias para Android
 ENV ANDROID_SDK_ROOT="/sdk/android"
 ENV PATH="${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools"
+
+# Configurar las variables de entorno necesarias para Java
+ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+ENV PATH="${PATH}:${JAVA_HOME}/bin"
 
 # Crear directorio para el Android SDK
 RUN mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
@@ -24,10 +29,10 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/licenses && \
     echo "84831b9409646a918e30573bab4c9c91346d8abd" > ${ANDROID_SDK_ROOT}/licenses/android-sdk-preview-license
 
 # Instalar Android SDK y platform-tools
-#RUN ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+RUN ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
 # Verificar la instalación de adb
-#RUN which adb
+RUN which adb
 
 # Establecer el directorio de trabajo (opcional, pero recomendado)
 WORKDIR /workspace
