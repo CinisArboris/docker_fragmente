@@ -1,47 +1,58 @@
 # Usar una imagen base de Debian
 FROM debian:bookworm
 
-# Bloque: Instalación de dependencias básicas
+## =============================================== DEPENDENCIAS_V1
 RUN apt-get update && \
-    apt-get install -y wget unzip tar curl
-
-# Bloque: Instalación de Java
-RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk && \
-    apt-get clean
-
-# Definir variable de entorno JAVA_HOME (esto depende de la ruta de instalación de tu Java)
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH $JAVA_HOME/bin:$PATH
-
-# Bloque: Preparación para Android SDK
+   apt-get install -y wget unzip tar curl xz-utils git && \
+   apt-get clean && \
+   rm -rf /var/lib/apt/lists/*
+# =============================================== DEPENDENCIAS_V2
+ RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk-headless openjdk-17-jre-headless && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+## =============================================== BASE_FOLDER
+RUN mkdir -p /sdk 
+# =============================================== CONFIG_JAVA
+ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+ENV PATH="${PATH}:${JAVA_HOME}/bin"
+# =============================================== CONFIG_ANDROID
 ENV ANDROID_SDK_ROOT="/sdk/android"
-RUN mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
-
-# Bloque: Descarga y configuración de Android Command Line Tools
-RUN wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O /tmp/cmdline-tools.zip && \
-    unzip -q /tmp/cmdline-tools.zip -d "${ANDROID_SDK_ROOT}/cmdline-tools" && \
-    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest
-
-# Configuración de PATH para las herramientas de Android
 ENV PATH="${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools"
-
-# Bloque: Aceptar licencias y descargar componentes de Android SDK
+# =============================================== BASE_FOLDER
+RUN mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
+# =============================================== CONFIG_TOOLS
+RUN wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O /tmp/cmdline-tools.zip \
+    && unzip -q /tmp/cmdline-tools.zip -d "${ANDROID_SDK_ROOT}/cmdline-tools" \
+    && mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest
+# =============================================== CONFIG_LICENCES
 RUN mkdir -p ${ANDROID_SDK_ROOT}/licenses && \
     echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ${ANDROID_SDK_ROOT}/licenses/android-sdk-license && \
     echo "84831b9409646a918e30573bab4c9c91346d8abd" > ${ANDROID_SDK_ROOT}/licenses/android-sdk-preview-license
-
+# =============================================== ISNTALL_SDK33
 RUN ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+# =============================================== CONFIG_FLUTTER
+ENV FLUTTER_HOME="/sdk/flutter"
+ENV PATH="${PATH}:${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin"
+# =====================================================
+# Descargar y descomprimir Flutter SDK versión 3.13.9
+RUN wget -q https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.9-stable.tar.xz -O /tmp/flutter.tar.xz
 
-# Bloque: Verificación de la instalación
-# Asegurar que platform-tools está instalado correctamente
-RUN ls -al ${ANDROID_SDK_ROOT}/platform-tools
+# Descomprimir Flutter SDK
+RUN tar -xJf /tmp/flutter.tar.xz -C /sdk
 
-# Agregar platform-tools al PATH para facilitar el acceso a adb y otras herramientas
-ENV PATH="${PATH}:${ANDROID_SDK_ROOT}/platform-tools"
+# Eliminar el archivo descargado
+RUN rm /tmp/flutter.tar.xz
 
-# Verificar la instalación de adb
-RUN which adb
+# Configurar Git para evitar el error de propiedad dudosa
+RUN git config --global --add safe.directory /sdk/flutter
 
-# Establecer el directorio de trabajo (opcional, pero recomendado para futuros comandos de RUN/COPY/etc.)
+# =====================================================
+# Pre-cargar Flutter dependencias
+RUN flutter precache
+# =====================================================
+# Verificar que todo esté en su lugar
+RUN flutter doctor
+# =====================================================
+# Establecer el directorio de trabajo (opcional, pero recomendado)
 WORKDIR /workspace
