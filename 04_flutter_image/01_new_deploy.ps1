@@ -18,19 +18,19 @@ try {
         throw "Docker build failed with exit code: $LASTEXITCODE"
     }
 
-    ## ===========================================================================================
-    #Write-Host "Empujando la nueva imagen a Docker Hub..."
-    ## Sube la imagen construida a Docker Hub.
-    #docker push "cinisarboris/imagen_flutter:$newVersion"
-    ## ===========================================================================================
-    ## Etiquetar la nueva imagen como "latest".
-    #docker tag "cinisarboris/imagen_flutter:$newVersion" "cinisarboris/imagen_flutter:latest"
-    ## ===========================================================================================
-    ## Empujar la etiqueta "latest" a Docker Hub.
-    #docker push "cinisarboris/imagen_flutter:latest"
-    ## ===========================================================================================
-    ## Si todo ha ido bien hasta este punto, actualizamos el archivo de versión.
-    #Set-Content -Path $versionFile -Value $newVersion
+    # ===========================================================================================
+    Write-Host "Empujando la nueva imagen a Docker Hub..."
+    # Sube la imagen construida a Docker Hub.
+    docker push "cinisarboris/imagen_flutter:$newVersion"
+    # ===========================================================================================
+    # Etiquetar la nueva imagen como "latest".
+    docker tag "cinisarboris/imagen_flutter:$newVersion" "cinisarboris/imagen_flutter:latest"
+    # ===========================================================================================
+    # Empujar la etiqueta "latest" a Docker Hub.
+    docker push "cinisarboris/imagen_flutter:latest"
+    # ===========================================================================================
+    # Si todo ha ido bien hasta este punto, actualizamos el archivo de versión.
+    Set-Content -Path $versionFile -Value $newVersion
 }
 catch {
     Write-Host "Error: $_" -ForegroundColor Red
