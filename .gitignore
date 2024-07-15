@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/DDE-V1E1-004/semana_3.laboratorio_4/qwerty/.angular
